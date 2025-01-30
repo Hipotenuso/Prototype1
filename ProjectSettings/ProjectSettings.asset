@@ -4,7 +4,7 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 28
-  productGUID: f361c9b050ac6dc408a8446e6b2d113c
+  productGUID: 4a7fe7bdd2bac6244a7ba20704c6da4e
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Prototype1
+  productName: Prototype2
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -626,14 +626,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Prototype1
+  metroPackageName: Prototype2
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: Prototype1
+  metroApplicationDescription: Prototype2
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -704,10 +704,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: 50b6e42d-5c20-4c83-926b-85551012d331
+  cloudProjectId: b6989164-95bc-4fcc-b877-db1b1457c5bd
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Prototype1
+  projectName: Prototype2
   organizationId: hipotenas
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
