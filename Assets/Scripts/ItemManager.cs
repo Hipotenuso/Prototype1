@@ -1,12 +1,14 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance;
 
-    public int souls;
+    public SOInt souls;
     public TextMeshProUGUI uiTextSouls;
+    public Slider slider;
     private void Awake()
     {
         if(Instance == null)
@@ -24,17 +26,17 @@ public class ItemManager : MonoBehaviour
     }
     private void Reset()
     {
-        souls = 0;
+        souls.value = 0;
         UpdateUI();
     }
-    public void AddCoins(int amount = 1)
+    public void AddSouls(int amount = 1)
     {
-        souls += amount;
+        souls.value += amount;
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        uiTextSouls.text = souls.ToString();
+        uiTextSouls.text = souls.value.ToString();
     }
 }

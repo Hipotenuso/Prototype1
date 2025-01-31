@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4590880553621307845}
   - component: {fileID: 5327633146718697487}
   - component: {fileID: 8559071145559947428}
-  - component: {fileID: 8907218386921602524}
+  - component: {fileID: -986579830417326690}
   m_Layer: 0
   m_Name: Soul
   m_TagString: Untagged
@@ -148,7 +148,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8907218386921602524
+--- !u!114 &-986579830417326690
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

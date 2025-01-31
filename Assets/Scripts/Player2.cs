@@ -2,24 +2,24 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.InputSystem;
 using System.Collections;
+using UnityEngine.UI;
+using System.Diagnostics;
 
 public class Player2 : MonoBehaviour
 {
-    public Animator animator;
+    [Header("References")]
+    public Animator _currentPlayer;
     public Ease ease;
     public Rigidbody2D myRigidbody;
-
-    [Header("Player Moviment Setup")]
-    public float speed;
-    public float speedRun;
-    public float _CurrentSpeed;
-    public float JumpForce;
-    public float JumpDuration;
-    public float attackDuration;
-    public int Playerside;
-    private void OnValidate()
+    public Slider slider;
+    public SOPlayerSetup soPlayerSetup;
+    //private void OnValidate()
+    //{
+        //if (_currentPlayer == null) _currentPlayer = GetComponent<Animator>();
+    //}
+    private void Awake()
     {
-        if (animator == null) animator = GetComponent<Animator>();
+        _currentPlayer = Instantiate(soPlayerSetup.player, transform);
     }
 
     public void Update()
@@ -27,55 +27,56 @@ public class Player2 : MonoBehaviour
         PlayerMoviment();
         PlayerJump();
         Attack();
+        HealthBar();
     }
     public void PlayerMoviment()
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            _CurrentSpeed = speedRun;
-            animator.SetBool("Run", true);
+            soPlayerSetup._CurrentSpeed = soPlayerSetup.speed;
+            _currentPlayer.SetBool("Run", true);
         }
         else
         {
-            _CurrentSpeed = speed;
-            animator.SetBool("Run", false);
+            soPlayerSetup._CurrentSpeed = soPlayerSetup.speed;
+            _currentPlayer.SetBool("Run", false);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            myRigidbody.linearVelocity = new Vector2(_CurrentSpeed, myRigidbody.linearVelocity.y);
+            myRigidbody.linearVelocity = new Vector2(soPlayerSetup._CurrentSpeed, myRigidbody.linearVelocity.y);
             myRigidbody.transform.localScale = new Vector3(3, 3, 1);
-            Playerside = 1;
-            animator.SetBool("Walk", true);
+            soPlayerSetup.Playerside = 1;
+            _currentPlayer.SetBool("Walk", true);
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            myRigidbody.linearVelocity = new Vector2(-_CurrentSpeed, myRigidbody.linearVelocity.y);
+            myRigidbody.linearVelocity = new Vector2(-soPlayerSetup._CurrentSpeed, myRigidbody.linearVelocity.y);
             myRigidbody.transform.localScale = new Vector3(-3, 3, 1);
-            Playerside = -1;
-            animator.SetBool("Walk", true);
+            soPlayerSetup.Playerside = -1;
+            _currentPlayer.SetBool("Walk", true);
         }
         else
         {
-            animator.SetBool("Walk", false);
+            _currentPlayer.SetBool("Walk", false);
         }
     }
     public void PlayerJump()
     {
-        if (Playerside == 1)
+        if (soPlayerSetup.Playerside == 1)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                animator.SetBool("Jump", true);
-                myRigidbody.linearVelocity = Vector2.up * JumpForce;
+                _currentPlayer.SetBool("Jump", true);
+                myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
                 StartCoroutine(ResetJumpAnimation());
             }
         }   
-        else if (Playerside == -1)
+        else if (soPlayerSetup.Playerside == -1)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                myRigidbody.linearVelocity = Vector2.up * JumpForce;
-                animator.SetBool("Jump", true);
+                myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
+                _currentPlayer.SetBool("Jump", true);
                 StartCoroutine(ResetJumpAnimation());
             }
         }
@@ -84,18 +85,23 @@ public class Player2 : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            animator.SetBool("Light_Attack", true);
+            _currentPlayer.SetBool("Light_Attack", true);
             StartCoroutine(ResetAttackAnimation());
         }
     }
     private IEnumerator ResetAttackAnimation()
     {
-        yield return new WaitForSeconds(attackDuration);
-        animator.SetBool("Light_Attack", false);
+        yield return new WaitForSeconds(soPlayerSetup.attackDuration);
+        _currentPlayer.SetBool("Light_Attack", false);
     }
     private IEnumerator ResetJumpAnimation()
     {
-        yield return new WaitForSeconds(JumpDuration);
-        animator.SetBool("Jump", false);  
+        yield return new WaitForSeconds(soPlayerSetup.jumpDuration);
+        _currentPlayer.SetBool("Jump", false);  
+    }
+    private void HealthBar()
+    {
+        var Health = gameObject.GetComponent<HealthBase>();
+        slider.value = Health._currentLife;
     }
 }

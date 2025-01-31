@@ -46,6 +46,8 @@ public class HealthBase : MonoBehaviour
 
         if(destroyOnKill)
         {
+            var animator = gameObject.GetComponent<Animator>();
+            //animator.SetBool("Death", true);
             Destroy(gameObject, delayToKill);
         }
     }
