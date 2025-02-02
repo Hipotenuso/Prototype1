@@ -8,18 +8,22 @@ using System.Diagnostics;
 public class Player2 : MonoBehaviour
 {
     [Header("References")]
+    public JumpReset jumpReset;
     public Animator _currentPlayer;
     public Ease ease;
     public Rigidbody2D myRigidbody;
     public Slider slider;
     public SOPlayerSetup soPlayerSetup;
-    //private void OnValidate()
-    //{
-        //if (_currentPlayer == null) _currentPlayer = GetComponent<Animator>();
-    //}
+    public ParticleSystem particlesRun;
+    public ParticleSystem particlesJump;
     private void Awake()
     {
         _currentPlayer = Instantiate(soPlayerSetup.player, transform);
+        particlesJump.Stop();
+        if (jumpReset == null)
+        {
+            jumpReset = FindAnyObjectByType<JumpReset>();
+        }
     }
 
     public void Update()
@@ -33,13 +37,18 @@ public class Player2 : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            soPlayerSetup._CurrentSpeed = soPlayerSetup.speed;
+            soPlayerSetup._CurrentSpeed = soPlayerSetup.speedRun;
             _currentPlayer.SetBool("Run", true);
+            if (!particlesRun.isPlaying)
+            {
+                particlesRun.Play();
+            }
         }
         else
         {
             soPlayerSetup._CurrentSpeed = soPlayerSetup.speed;
             _currentPlayer.SetBool("Run", false);
+            particlesRun.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         }
         if (Input.GetKey(KeyCode.D))
         {
@@ -62,43 +71,58 @@ public class Player2 : MonoBehaviour
     }
     public void PlayerJump()
     {
-        if (soPlayerSetup.Playerside == 1)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
+        if (jumpReset.Groundeded != false)
+            if (soPlayerSetup.Playerside == 1)
             {
-                _currentPlayer.SetBool("Jump", true);
-                myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
-                StartCoroutine(ResetJumpAnimation());
-            }
-        }   
-        else if (soPlayerSetup.Playerside == -1)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (!particlesJump.isPlaying)
+                    {
+                        particlesJump.Play();
+                    }
+                    _currentPlayer.SetBool("Jump", true);
+                    myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
+                    jumpReset.Groundeded = false;
+                    //StartCoroutine(ResetJumpAnimation());
+                }
+            }   
+            else if (soPlayerSetup.Playerside == -1)
             {
-                myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
-                _currentPlayer.SetBool("Jump", true);
-                StartCoroutine(ResetJumpAnimation());
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    if (!particlesJump.isPlaying)
+                    {
+                        particlesJump.Play();
+                    }
+                    myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
+                    _currentPlayer.SetBool("Jump", true);
+                    jumpReset.Groundeded = false;
+                    //StartCoroutine(ResetJumpAnimation());
+                }
             }
-        }
     }
     public void Attack()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             _currentPlayer.SetBool("Light_Attack", true);
             StartCoroutine(ResetAttackAnimation());
+        }
+        else
+        {
+            _currentPlayer.SetBool("Light_Attack", false);
         }
     }
     private IEnumerator ResetAttackAnimation()
     {
         yield return new WaitForSeconds(soPlayerSetup.attackDuration);
-        _currentPlayer.SetBool("Light_Attack", false);
     }
-    private IEnumerator ResetJumpAnimation()
-    {
-        yield return new WaitForSeconds(soPlayerSetup.jumpDuration);
-        _currentPlayer.SetBool("Jump", false);  
-    }
+    //private IEnumerator ResetJumpAnimation()
+    //{
+        //yield return new WaitForSeconds(soPlayerSetup.jumpDuration);
+        //_currentPlayer.SetBool("Jump", false);
+        //particlesJump.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+    //}
     private void HealthBar()
     {
         var Health = gameObject.GetComponent<HealthBase>();

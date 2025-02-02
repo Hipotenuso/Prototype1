@@ -8,6 +8,7 @@ public class StaffBase : MonoBehaviour
     public ProjectileBase prefabProjectile;
     public Transform positionToShoot;
     public float shootDelay;
+    public float shootDelay2;
     private Coroutine _currentCoroutine;
     public Transform PlayerSide;
 
@@ -29,6 +30,7 @@ public class StaffBase : MonoBehaviour
         {
             yield return new WaitForSeconds(shootDelay);
             Shoot();
+            yield return new WaitForSeconds(shootDelay2);
         }
     }
 

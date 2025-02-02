@@ -16,4 +16,5 @@ public class SOPlayerSetup : ScriptableObject
     public float jumpForce;
     public float jumpDuration;
     public float attackDuration;
+    public float particlesJumpDuration;
 }

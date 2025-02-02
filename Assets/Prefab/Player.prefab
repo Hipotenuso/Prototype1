@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 7652963772485887430}
   - component: {fileID: 7923801832345730533}
   - component: {fileID: 7033994862092989265}
+  - component: {fileID: -1745788218724105130}
+  - component: {fileID: 3509854671585075497}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -140,3 +142,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-1745788218724105130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3663128770059389320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b5a2c6a11288e469a2752846b4b48e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabProjectile: {fileID: 2910998350215881206, guid: 273303c85566eb340b1f7ba27126c210, type: 3}
+  positionToShoot: {fileID: 0}
+  PlayerSide: {fileID: 0}
+--- !u!114 &3509854671585075497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3663128770059389320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57bbad3fad5aaef458dd70bc428f7d51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player2: {fileID: 0}
+  _currentPlayer: {fileID: 7923801832345730533}
+  Groundeded: 0
