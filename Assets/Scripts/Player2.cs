@@ -4,11 +4,13 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using UnityEngine.UI;
 using System.Diagnostics;
+using Unity.VisualScripting;
+using System.Collections.Generic;
 
 public class Player2 : MonoBehaviour
 {
     [Header("References")]
-    public JumpReset jumpReset;
+    public EventsHelper eventsHelper;
     public Animator _currentPlayer;
     public Ease ease;
     public Rigidbody2D myRigidbody;
@@ -20,9 +22,9 @@ public class Player2 : MonoBehaviour
     {
         _currentPlayer = Instantiate(soPlayerSetup.player, transform);
         particlesJump.Stop();
-        if (jumpReset == null)
+        if (eventsHelper == null)
         {
-            jumpReset = FindAnyObjectByType<JumpReset>();
+            eventsHelper = FindAnyObjectByType<EventsHelper>();
         }
     }
 
@@ -71,18 +73,19 @@ public class Player2 : MonoBehaviour
     }
     public void PlayerJump()
     {
-        if (jumpReset.Groundeded != false)
+        if (eventsHelper.Groundeded != false)
+        {
             if (soPlayerSetup.Playerside == 1)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     if (!particlesJump.isPlaying)
                     {
-                        particlesJump.Play();
+                        particlesJump.Play(true);
                     }
                     _currentPlayer.SetBool("Jump", true);
                     myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
-                    jumpReset.Groundeded = false;
+                    eventsHelper.Groundeded = false;
                     //StartCoroutine(ResetJumpAnimation());
                 }
             }   
@@ -96,10 +99,11 @@ public class Player2 : MonoBehaviour
                     }
                     myRigidbody.linearVelocity = Vector2.up * soPlayerSetup.jumpForce;
                     _currentPlayer.SetBool("Jump", true);
-                    jumpReset.Groundeded = false;
+                    eventsHelper.Groundeded = false;
                     //StartCoroutine(ResetJumpAnimation());
                 }
             }
+        }
     }
     public void Attack()
     {
